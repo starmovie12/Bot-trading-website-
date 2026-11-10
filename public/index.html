@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bot Dashboard</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Bot Dashboard</h1>
+      <span id="pill" class="pill pill-off">Bot band</span>
+    </div>
+    <span id="age" class="age">data ki umar: —</span>
+  </header>
+  <div id="demo" class="banner" hidden>NAKLI DATA: bot abhi juda nahi hai. Yeh sirf dhaancha hai.</div>
+  <div id="error" class="banner banner-red" hidden></div>
+
+  <section class="strip" aria-label="Bot ki haalat">
+    <div class="tile"><span class="label">Mode</span><span id="mode" class="value">—</span></div>
+    <div class="tile"><span class="label">Bot</span><span id="running" class="value">—</span></div>
+    <div class="tile"><span class="label">Din ka Mausam</span><span id="mausam" class="value">—</span></div>
+    <div class="tile"><span class="label">Zone</span><span id="zone" class="value">—</span></div>
+    <div class="tile"><span class="label">Bache entry</span><span id="entries" class="value">—</span></div>
+    <div class="tile"><span class="label">Aaj ka nuksan (seema ka %)</span><span id="loss" class="value">—</span></div>
+    <div class="tile"><span class="label">Daily Profit Lock</span><span id="lock" class="value">—</span></div>
+  </section>
+
+  <section class="row">
+    <div class="panel"><h2>Active Gates</h2><ul id="gates" class="list"></ul></div>
+    <div class="panel"><h2>Warning</h2><p id="warning" class="warn">—</p></div>
+  </section>
+
+  <section class="panel">
+    <h2>Index (Call / Put)</h2>
+    <div id="indices" class="indices"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Khule trades</h2>
+    <table>
+      <thead><tr><th>Index</th><th>Strike</th><th>Call/Put</th><th>Lot</th><th>Live bhav</th><th>Net P&amp;L</th><th>Stop-Loss</th></tr></thead>
+      <tbody id="trades"><tr><td colspan="7" class="muted">Koi khula trade nahi</td></tr></tbody>
+    </table>
+  </section>
+
+  <section class="panel">
+    <h2>Setup ki haalat</h2>
+    <ol class="steps">
+      <li class="done">Website Vercel par chal rahi hai (repo <code>Bot-trading-website-</code>)</li>
+      <li>Vercel par Deployment Protection chalu karo (sirf aapka login)</li>
+      <li>Upstox par TOTP aur ek API app (Algo Trading App) banao</li>
+      <li>AWS Lightsail Mumbai server lo aur static IP lagao</li>
+      <li>Pehredaar ke liye Oracle Free server lo</li>
+      <li>Dono IP Upstox "Static IPs" mein daalo (market band hone ke baad)</li>
+      <li>Claude ko M1 ka agla prompt do (server par bot ka data hissa)</li>
+    </ol>
+    <p class="muted">Poore steps: <a href="https://github.com/starmovie12/Bot-trading-/blob/main/SETUP_GUIDE.md" rel="noopener noreferrer">SETUP_GUIDE.md</a> (PDF bhi repo <code>Bot-trading-</code> ki <code>main</code> branch mein hai).</p>
+  </section>
+
+  <section class="panel">
+    <h2>Controls</h2>
+    <p class="muted">Start, Stop, Emergency Pause aur Kill-Switch M7 mein aayenge (signed hukm + 2FA ke saath). Abhi band hain.</p>
+    <div class="controls">
+      <button disabled>Start</button><button disabled>Stop</button>
+      <button disabled>Emergency Pause</button><button disabled class="danger">Kill-Switch</button>
+    </div>
+  </section>
+
+  <footer class="muted">Faisla hamesha bot leta hai; Dashboard sirf dikhata hai. Refresh: har 5 second.</footer>
+</body>
+</html>

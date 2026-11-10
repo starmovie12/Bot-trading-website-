@@ -1,0 +1,8 @@
+{
+  "name": "bot-dashboard",
+  "private": true,
+  "type": "module",
+  "description": "Bot ka Dashboard (Vercel). Koi npm dependency nahi.",
+  "engines": { "node": "24.x" },
+  "scripts": { "test": "node --test" }
+}
