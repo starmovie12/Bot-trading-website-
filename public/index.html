@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="dark light">
   <meta name="theme-color" content="#0b0f1a">
-  <meta name="description" content="Bot ka trading terminal: index, chart, option chain, trades aur bot ki sehat ek jagah.">
+  <meta name="description" content="Bot Terminal: trading bot ka admin panel. Index, chart, option chain, trades, bot ki sehat, controls aur settings.">
   <title>Bot Terminal</title>
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="/style.css">
-  <script src="/app.js" defer></script>
+  <script type="module" src="/js/main.js"></script>
 </head>
 <body>
   <svg class="sprite" aria-hidden="true" focusable="false">
@@ -18,7 +18,7 @@
     <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 10.5 12 3.5l8.5 7v9a1 1 0 0 1-1 1H15v-6H9v6H4.5a1 1 0 0 1-1-1z"/></symbol>
     <symbol id="i-chart" viewBox="0 0 24 24"><path d="M7 3v4M7 17v4M17 3v5M17 16v5"/><rect x="5" y="7" width="4" height="10" rx="1"/><rect x="15" y="8" width="4" height="8" rx="1"/></symbol>
     <symbol id="i-chain" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9.5h18M3 15h18M12 4v16"/></symbol>
-    <symbol id="i-trades" viewBox="0 0 24 24"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="4.5" cy="6.5" r="1.2"/><circle cx="4.5" cy="12" r="1.2"/><circle cx="4.5" cy="17.5" r="1.2"/></symbol>
+    <symbol id="i-trades" viewBox="0 0 24 24"><path d="M7 7h13M17 4l3 3-3 3M17 17H4M7 14l-3 3 3 3"/></symbol>
     <symbol id="i-bot" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 2.5V6M15 2.5V6M9 18v3.5M15 18v3.5M2.5 9H6M2.5 15H6M18 9h3.5M18 15h3.5"/></symbol>
     <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 13.2A8.5 8.5 0 1 1 10.8 3.5a6.6 6.6 0 0 0 9.7 9.7z"/></symbol>
@@ -28,112 +28,160 @@
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5 10 17.5 19 7"/></symbol>
     <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5 17.5 17.5M17.5 6.5 6.5 17.5"/></symbol>
     <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 2.5 20h19z"/><path d="M12 10v4.5M12 17.2v.1"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></symbol>
     <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></symbol>
     <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
     <symbol id="i-empty" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M3.5 13h5l1.5 2h4l1.5-2h5"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M9 5.5 15.5 12 9 18.5"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v4.5h-4.5"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="18.5" cy="12" r="1.4"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="4.5" cy="6.5" r="1.2"/><circle cx="4.5" cy="12" r="1.2"/><circle cx="4.5" cy="17.5" r="1.2"/></symbol>
+    <symbol id="i-power" viewBox="0 0 24 24"><path d="M12 3v8"/><path d="M6.6 6.6a7.5 7.5 0 1 0 10.8 0"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8.5 5.5v13M15.5 5.5v13"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+    <symbol id="i-exit" viewBox="0 0 24 24"><path d="M14 4.5h4.5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H14"/><path d="M10 8l-4 4 4 4M6 12h10"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.5 4.5 5.5v5.7c0 4.9 3.2 8.9 7.5 10.3 4.3-1.4 7.5-5.4 7.5-10.3V5.5z"/><path d="m9 12 2 2 4-4.5"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M3 12h4l2.5-6 4 12 2.5-6H21"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m11 12 8.5-8.5M16 7l2.5 2.5M14 9l2 2"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="7" rx="1.5"/><rect x="4" y="13" width="16" height="7" rx="1.5"/><path d="M8 7.5h.1M8 16.5h.1"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></symbol>
+    <symbol id="i-maximize" viewBox="0 0 24 24"><path d="M4.5 9V4.5H9M15 4.5h4.5V9M19.5 15v4.5H15M9 19.5H4.5V15"/></symbol>
+    <symbol id="i-table" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M3.5 14.5h17M9.5 9.5v10"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M5 4.5h10.5a3 3 0 0 1 3 3v12H8a3 3 0 0 1-3-3z"/><path d="M5 16.5a3 3 0 0 1 3-3h10.5"/></symbol>
   </svg>
 
   <a class="skip" href="#main">Seedha content par jao</a>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
 
   <header class="topbar">
-    <a class="brand" href="#home" aria-label="Bot Terminal: Home">
+    <a class="brand" href="#home" aria-label="Bot Terminal: Overview">
       <svg class="logo" aria-hidden="true"><use href="#i-logo"/></svg>
       <span class="brand-name">Bot Terminal</span>
     </a>
     <div id="ticker" class="ticker" aria-label="Index ki haalat"></div>
-    <div class="top-meta">
+    <div class="top-actions">
       <span id="market-chip" class="chip"><span class="dot"></span><span>Market</span></span>
       <span id="mode-chip" class="chip chip-accent">Paper</span>
-      <time id="clock" class="clock" aria-label="Abhi ka samay (IST)">--:--:--</time>
-      <button id="theme-btn" class="icon-btn" type="button" aria-label="Light theme chalu karo">
-        <svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg>
-      </button>
+      <time id="clock" class="clock">--:--:-- IST</time>
+      <button id="live-btn" class="live-btn is-live" type="button" aria-pressed="true"><span class="dot"></span><span class="live-word">Live</span></button>
+      <button id="refresh-btn" class="icon-btn" type="button" aria-label="Abhi taaza karo"><svg class="ic" aria-hidden="true"><use href="#i-refresh"/></svg></button>
+      <button id="bell-btn" class="icon-btn bell" type="button" aria-label="Notifications"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span id="bell-badge" class="badge" hidden>0</span></button>
+      <button id="theme-btn" class="icon-btn" type="button" aria-label="Theme badlo"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
     </div>
   </header>
 
-  <div id="demo" class="banner banner-demo" role="status" hidden>
-    <svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg>
-    <span><strong>NAKLI DATA:</strong> bot abhi juda nahi hai. Yeh sirf namoona hai ki asli bot chalne par terminal kaisa dikhega. Koi daam, OI ya P&amp;L asli nahi.</span>
-  </div>
-  <div id="error" class="banner banner-error" role="alert" hidden></div>
-
   <div class="layout">
-    <nav class="nav" aria-label="Main menu">
-      <a href="#home" data-nav="home"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg><span>Home</span></a>
+    <nav class="side" aria-label="Main menu">
+      <p class="side-group">Trading</p>
+      <a href="#home" data-nav="home"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg><span>Overview</span></a>
       <a href="#chart" data-nav="chart"><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg><span>Chart</span></a>
-      <a href="#chain" data-nav="chain"><svg class="ic" aria-hidden="true"><use href="#i-chain"/></svg><span class="lbl-long">Option Chain</span><span class="lbl-short">Chain</span></a>
+      <a href="#chain" data-nav="chain"><svg class="ic" aria-hidden="true"><use href="#i-chain"/></svg><span>Option Chain</span></a>
       <a href="#trades" data-nav="trades"><svg class="ic" aria-hidden="true"><use href="#i-trades"/></svg><span>Trades</span></a>
-      <a href="#bot" data-nav="bot"><svg class="ic" aria-hidden="true"><use href="#i-bot"/></svg><span>Bot</span></a>
-      <p class="nav-foot">Faisla hamesha bot leta hai. Yeh terminal sirf dikhata hai.</p>
+      <p class="side-group">Bot</p>
+      <a href="#health" data-nav="health"><svg class="ic" aria-hidden="true"><use href="#i-bot"/></svg><span>Sehat</span></a>
+      <a href="#controls" data-nav="controls"><svg class="ic" aria-hidden="true"><use href="#i-power"/></svg><span>Controls</span></a>
+      <a href="#activity" data-nav="activity"><svg class="ic" aria-hidden="true"><use href="#i-list"/></svg><span>Activity log</span></a>
+      <p class="side-group">Admin</p>
+      <a href="#settings" data-nav="settings"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg><span>Settings</span></a>
+      <a href="#setup" data-nav="setup"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Setup checklist</span></a>
+      <div class="side-foot">
+        <svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg>
+        <p>Faisla hamesha bot leta hai. Profit ki koi guarantee nahi.</p>
+      </div>
     </nav>
 
     <main id="main" tabindex="-1">
-      <!-- HOME -->
+    <div id="demo" class="banner banner-demo" role="status" hidden>
+      <svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg>
+      <p><strong>NAKLI DATA.</strong> Bot abhi juda nahi hai. Yeh namoona hai ki asli bot chalne par terminal kaisa dikhega. Koi daam, OI ya P&amp;L asli nahi.</p>
+    </div>
+    <div id="error" class="banner banner-error" role="alert" hidden></div>
+      <!-- ================= OVERVIEW ================= -->
       <section data-view="home" aria-labelledby="h-home">
-        <div class="view-head">
-          <h1 id="h-home">Market overview</h1>
-          <p id="session-line" class="muted">Data aa raha hai…</p>
-        </div>
-        <div id="idx-cards" class="idx-grid">
+        <header class="page-head">
+          <div><h1 id="h-home">Overview</h1><p id="ov-session" class="page-sub">Data aa raha hai…</p></div>
+        </header>
+        <div id="ov-cards" class="idx-grid">
           <div class="idx-card skeleton"></div><div class="idx-card skeleton"></div><div class="idx-card skeleton"></div><div class="idx-card skeleton"></div>
         </div>
         <div class="grid-main">
           <div class="col">
             <article class="card">
-              <div class="card-head"><h2>Aaj ka P&amp;L</h2><span id="pnl-sub" class="muted small"></span></div>
-              <div id="pnl" class="pnl"><div class="skeleton line-lg"></div></div>
+              <div class="card-head">
+                <h2>Aaj ka P&amp;L</h2>
+                <div class="card-actions">
+                  <span id="ov-pnl-mode" class="chip chip-muted">Paper trading</span>
+                  <button id="ov-pnl-table" class="btn btn-ghost btn-sm" type="button" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-table"/></svg><span>Table dikhao</span></button>
+                </div>
+              </div>
+              <div id="ov-pnl-hero" class="hero tone-flat">—</div>
+              <dl id="ov-pnl-kv" class="kv kv-4"></dl>
+              <div id="ov-pnl-chart" class="chart-box chart-sm"><div class="skeleton fill"></div></div>
+              <div id="ov-capital" class="mt"></div>
             </article>
             <article class="card">
-              <div class="card-head"><h2>Khule positions</h2><a class="link" href="#trades">Sab trades</a></div>
-              <div id="home-positions"></div>
+              <div class="card-head"><h2>Khule positions</h2><a class="link" href="#trades">Sab trades <svg class="ic ic-sm" aria-hidden="true"><use href="#i-chevron"/></svg></a></div>
+              <div id="ov-positions" class="stack"></div>
             </article>
             <article class="card">
-              <div class="card-head"><h2>Bot ke signal</h2><span class="muted small">har index ke checks</span></div>
-              <div id="signals" class="signals"></div>
+              <div class="card-head"><h2>Bot ke signal</h2><span class="muted small">Tap karke checks dekho</span></div>
+              <div id="ov-signals" class="signals"></div>
             </article>
           </div>
           <div class="col">
             <article class="card">
-              <div class="card-head"><h2>Risk control</h2><svg class="ic muted" aria-hidden="true"><use href="#i-lock"/></svg></div>
-              <div id="risk"></div>
+              <div class="card-head"><h2>Risk control</h2><a class="link" href="#controls">Controls <svg class="ic ic-sm" aria-hidden="true"><use href="#i-chevron"/></svg></a></div>
+              <div id="ov-risk" class="stack-lg"></div>
             </article>
             <article class="card">
-              <div class="card-head"><h2>Aaj ki khabar</h2><span class="muted small">bot ka log</span></div>
-              <ol id="events" class="timeline"></ol>
+              <div class="card-head"><h2>Aaj ki khabar</h2><a class="link" href="#activity">Poora log <svg class="ic ic-sm" aria-hidden="true"><use href="#i-chevron"/></svg></a></div>
+              <ol id="ov-events" class="timeline"></ol>
             </article>
           </div>
         </div>
       </section>
 
-      <!-- CHART -->
+      <!-- ================= CHART ================= -->
       <section data-view="chart" aria-labelledby="h-chart" hidden>
-        <div class="view-head"><h1 id="h-chart">Chart</h1><p class="muted">5 aur 15 minute candles, EMA 9/21 aur bot ke entry/exit nishaan.</p></div>
-        <div class="toolbar">
-          <div id="chart-idx" class="seg"></div>
-          <div id="chart-tf" class="seg"></div>
-        </div>
-        <article class="card chart-card">
-          <div id="ohlc" class="ohlc"></div>
-          <div id="chart" class="chart"></div>
-          <div class="legend">
-            <span><i class="key key-ema9"></i>EMA 9</span>
-            <span><i class="key key-ema21"></i>EMA 21</span>
+        <header class="page-head"><div><h1 id="h-chart">Chart</h1><p class="page-sub">Candles, EMA 9/21 aur bot ke entry/exit. Chart par ungli ya teer (← →) chalao.</p></div></header>
+        <div class="filter-row"><div id="ch-idx" class="seg"></div><div id="ch-tf" class="seg"></div></div>
+        <article id="ch-card" class="card chart-card">
+          <div class="chart-head">
+            <div class="chart-title"><h2 id="ch-title">—</h2><b id="ch-ltp" class="chart-ltp">—</b><span id="ch-chg" class="chg chg-flat">—</span></div>
+            <div class="card-actions">
+              <button id="ch-table" class="btn btn-ghost btn-sm" type="button" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-table"/></svg><span>Table dikhao</span></button>
+              <button id="ch-max" class="btn btn-ghost btn-sm" type="button" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-maximize"/></svg><span>Bada karo</span></button>
+            </div>
+          </div>
+          <div id="ch-toggles" class="toggles" role="group" aria-label="Chart par kya dikhe"></div>
+          <div id="ch-ohlc" class="ohlc"></div>
+          <div id="ch-plot" class="chart-box chart-lg"><div class="skeleton fill"></div></div>
+          <div id="ch-legend" class="legend">
             <span><i class="key key-prev"></i>Pichhla close</span>
-            <span><i class="key key-buy"></i>Entry</span>
-            <span><i class="key key-sell"></i>Exit</span>
+            <span><i class="key key-buy"></i>Bot entry</span>
+            <span><i class="key key-sell"></i>Bot exit</span>
+            <span><i class="key key-candle-up"></i>Candle upar</span>
+            <span><i class="key key-candle-down"></i>Candle neeche</span>
           </div>
         </article>
         <article class="card">
           <div class="card-head"><h2>Is index ka signal</h2></div>
-          <div id="chart-signal"></div>
+          <div id="ch-signal"></div>
         </article>
       </section>
 
-      <!-- OPTION CHAIN -->
+      <!-- ================= OPTION CHAIN ================= -->
       <section data-view="chain" aria-labelledby="h-chain" hidden>
-        <div class="view-head"><h1 id="h-chain">Option chain</h1><p class="muted">ATM ke aas-paas 15 strike. Rangeen hissa In-the-money hai.</p></div>
-        <div class="toolbar"><div id="chain-idx" class="seg"></div></div>
-        <div id="chain-stats" class="stats"></div>
+        <header class="page-head"><div><h1 id="h-chain">Option chain</h1><p class="page-sub">Calls bayen, puts dayen. Rangeen = In-the-money. Row par tap: poori jaankari.</p></div></header>
+        <div class="filter-row"><div id="cn-idx" class="seg"></div><div id="cn-span" class="seg"></div></div>
+        <div id="cn-stats" class="stats stats-5"></div>
         <article class="card flush">
           <div class="table-wrap">
             <table class="chain">
@@ -146,66 +194,192 @@
                   <th scope="col" class="puts">PE LTP</th><th scope="col" class="hide-sm">IV</th><th scope="col" class="hide-sm">OI badla</th><th scope="col" class="puts">PE OI</th>
                 </tr>
               </thead>
-              <tbody id="chain-body"></tbody>
+              <tbody id="cn-body"></tbody>
             </table>
           </div>
         </article>
       </section>
 
-      <!-- TRADES -->
+      <!-- ================= TRADES ================= -->
       <section data-view="trades" aria-labelledby="h-trades" hidden>
-        <div class="view-head"><h1 id="h-trades">Trades</h1><p class="muted">Bot sirf 1 lot leta hai, achha premium mile tabhi.</p></div>
-        <div id="trade-stats" class="stats"></div>
-        <div id="trade-tabs" class="seg seg-wide"></div>
-        <div id="trade-list" class="stack"></div>
+        <header class="page-head">
+          <div><h1 id="h-trades">Trades</h1><p class="page-sub">Bot sirf 1 lot leta hai, achha premium mile tabhi.</p></div>
+          <div id="tr-actions" class="page-actions"></div>
+        </header>
+        <div id="tr-stats" class="stats"></div>
+        <div class="filter-row"><div id="tr-tabs" class="seg seg-wide"></div></div>
+        <div id="tr-list" class="stack"></div>
       </section>
 
-      <!-- BOT -->
-      <section data-view="bot" aria-labelledby="h-bot" hidden>
-        <div class="view-head"><h1 id="h-bot">Bot ki sehat</h1><p class="muted">Har hisse ki haalat. Hara = theek, laal = dikkat (saath mein likha bhi hai).</p></div>
-        <div id="health" class="health-grid"></div>
-        <div class="grid-main">
+      <!-- ================= HEALTH ================= -->
+      <section data-view="health" aria-labelledby="h-health" hidden>
+        <header class="page-head"><div><h1 id="h-health">Bot ki sehat</h1><p class="page-sub">Har hisse ki haalat: "Theek" ya "Dhyan do" (rang ke saath likha bhi).</p></div></header>
+        <div id="hl-tiles" class="health-grid"></div>
+        <div class="grid-2">
           <article class="card">
             <div class="card-head"><h2>Gates (asli paise se pehle)</h2></div>
-            <ul id="gates" class="checklist"></ul>
+            <ul id="hl-gates" class="checklist"></ul>
             <p class="muted small">Real Money tabhi, jab Backtest, Paper aur Stage2 teeno pass hon. Profit ki koi guarantee nahi.</p>
           </article>
           <article class="card">
-            <div class="card-head"><h2>Controls</h2><span class="chip chip-muted">M7 mein</span></div>
-            <p class="muted small">Start, Stop, Emergency Pause aur Kill-Switch signed hukm + 2FA ke saath aayenge. Abhi band hain.</p>
-            <div class="controls">
-              <button type="button" class="btn" disabled>Start</button>
-              <button type="button" class="btn" disabled>Stop</button>
-              <button type="button" class="btn" disabled>Emergency Pause</button>
-              <button type="button" class="btn btn-danger" disabled>Kill-Switch</button>
-            </div>
+            <div class="card-head"><h2>Market ka samay</h2></div>
+            <p id="hl-session" class="muted small">—</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ================= CONTROLS ================= -->
+      <section data-view="controls" aria-labelledby="h-controls" hidden>
+        <header class="page-head"><div><h1 id="h-controls">Controls</h1><p class="page-sub">Bot ON/OFF, Paper ya Real Money, aur emergency buttons.</p></div></header>
+        <div class="notice">
+          <svg class="ic" aria-hidden="true"><use href="#i-info"/></svg>
+          <p><strong>Practice mode.</strong> Bot abhi juda nahi, isliye yeh buttons sirf practice hain: confirmation, haalat aur log sab chalte hain, par koi hukm broker tak nahi jaata. Asli hukm M7 mein signed + 2FA ke saath aayenge.</p>
+        </div>
+        <div class="grid-main">
+          <div class="col">
+            <article class="card">
+              <div id="ct-state" class="state-card"></div>
+              <div class="ctl-main">
+                <div class="ctl-block">
+                  <span class="field-label">Bot</span>
+                  <button id="ct-power" class="switch" type="button" role="switch" aria-checked="true" aria-label="Bot ON ya OFF"><span class="switch-track"><span class="switch-knob"></span></span><span id="ct-power-word" class="switch-word">ON</span></button>
+                </div>
+                <div class="ctl-block">
+                  <span class="field-label" id="ct-mode-label">Mode</span>
+                  <div class="mode-pick" role="radiogroup" aria-labelledby="ct-mode-label">
+                    <button type="button" class="mode-btn" role="radio" data-mode="paper" aria-checked="true"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg><span><b>Paper</b><small>Nakli trade, koi paisa nahi</small></span></button>
+                    <button type="button" class="mode-btn mode-real" role="radio" data-mode="real" aria-checked="false"><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg><span><b>Real Money</b><small>Asli paisa; "REAL" likh kar</small></span></button>
+                  </div>
+                  <p id="ct-mode-note" class="small muted"></p>
+                </div>
+              </div>
+            </article>
+            <article class="card">
+              <div class="card-head"><h2>Emergency</h2></div>
+              <div id="ct-buttons" class="ctl-grid"></div>
+            </article>
+          </div>
+          <article class="card">
+            <div class="card-head"><h2>Practice log</h2><button id="ct-clear" class="btn btn-ghost btn-sm" type="button"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg><span>Mitao</span></button></div>
+            <ol id="ct-log" class="log"></ol>
           </article>
         </div>
         <article class="card">
-          <div class="card-head"><h2>Setup ki haalat</h2></div>
-          <ol class="steps">
-            <li class="done">Website Vercel par (repo <code>Bot-trading-website-</code>)</li>
-            <li>Vercel par Deployment Protection chalu karo (sirf aapka login)</li>
-            <li>Upstox par TOTP aur ek API app (Algo Trading App) banao</li>
-            <li>AWS Lightsail Mumbai server lo aur static IP lagao</li>
-            <li>Pehredaar ke liye Oracle Free server lo</li>
-            <li>Dono IP Upstox "Static IPs" mein daalo (market band hone ke baad)</li>
-            <li>Claude ko M1 ka agla prompt do (server par bot ka data hissa)</li>
-          </ol>
-          <p class="muted small">Poore steps: <a class="link" href="https://github.com/starmovie12/Bot-trading-/blob/main/SETUP_GUIDE.md" rel="noopener noreferrer">SETUP_GUIDE.md</a> (PDF bhi repo <code>Bot-trading-</code> ki <code>main</code> branch mein hai).</p>
-        </article>
-        <article class="card">
-          <div class="card-head"><h2>Market ka samay</h2></div>
-          <p id="session-note" class="muted small">—</p>
+          <div class="card-head"><h2>Real Money ki suraksha</h2><span class="chip chip-accent"><svg class="ic ic-sm" aria-hidden="true"><use href="#i-lock"/></svg>Bot khud jaanchta hai</span></div>
+          <p class="muted small">Website sirf hukm bhejegi (M7: signed + 2FA). Bot apne server par teeno Gates (Backtest, Paper, Stage2) aur nuksan seema jaanch kar hi Real Money chalu karega. Website hack bhi ho jaaye toh bina 2FA ke Real nahi hoga. Profit ki koi guarantee nahi.</p>
         </article>
       </section>
 
-      <footer class="foot muted small">
-        <span id="age">Data ki umar: —</span>
-        <span>Refresh har 5 second (tab chhupa ho toh ruk jaata hai).</span>
+      <!-- ================= ACTIVITY ================= -->
+      <section data-view="activity" aria-labelledby="h-activity" hidden>
+        <header class="page-head">
+          <div><h1 id="h-activity">Activity log</h1><p class="page-sub">Bot ne aaj kya-kya kiya.</p></div>
+          <div class="page-actions"><button id="ac-export" class="btn btn-secondary" type="button"><svg class="ic" aria-hidden="true"><use href="#i-download"/></svg><span>CSV download</span></button></div>
+        </header>
+        <div class="filter-row">
+          <label class="search"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input id="ac-search" type="search" placeholder="Khojo: Entry, Nifty, Stop-Loss…" aria-label="Log mein khojo" autocomplete="off"></label>
+          <div id="ac-levels" class="seg"></div>
+        </div>
+        <article class="card">
+          <div class="card-head"><h2 id="ac-count">—</h2></div>
+          <ol id="ac-list" class="timeline timeline-full"></ol>
+        </article>
+      </section>
+
+      <!-- ================= SETTINGS ================= -->
+      <section data-view="settings" aria-labelledby="h-settings" hidden>
+        <header class="page-head"><div><h1 id="h-settings">Settings</h1><p class="page-sub">Aapke baaki faisle aur is browser ki pasand.</p></div></header>
+        <div class="grid-main">
+          <article class="card">
+            <div class="card-head"><div><h2>Risk niyam (aapke faisle)</h2><p class="muted small">Draft sirf is browser mein rehta hai. JSON download karke Claude ko do; woh bot ki niyam-file mein bharega.</p></div></div>
+            <form id="st-form" class="form" novalidate>
+              <div class="field-grid">
+                <label class="field"><span class="field-label">Capital (₹) <em>zaroori</em></span><input class="input" name="capital" type="number" inputmode="numeric" min="1000" step="500" placeholder="15000"><span class="field-help">Aapka trading balance</span><span id="err-capital" class="field-err" hidden></span></label>
+                <label class="field"><span class="field-label">Kul jeb nuksan seema (₹) <em>zaroori</em></span><input class="input" name="totalLoss" type="number" inputmode="numeric" min="1" step="100" placeholder="jaise 5000"><span class="field-help">Itna nuksan hote hi bot poori tarah ruke</span><span id="err-totalLoss" class="field-err" hidden></span></label>
+                <label class="field"><span class="field-label">Din ki nuksan seema (₹) <em>zaroori</em></span><input class="input" name="dailyLoss" type="number" inputmode="numeric" min="1" step="100" placeholder="jaise 1500"><span class="field-help">Aaj itna nuksan: aaj ke liye band</span><span id="err-dailyLoss" class="field-err" hidden></span></label>
+                <label class="field"><span class="field-label">Din mein max entry</span><input class="input" name="maxEntries" type="number" inputmode="numeric" min="1" max="10" step="1" placeholder="khaali = bot ka default"><span class="field-help">1 se 10</span><span id="err-maxEntries" class="field-err" hidden></span></label>
+                <label class="field"><span class="field-label">Pehli entry kab se</span><input class="input" name="entryStart" type="time" min="09:15" max="15:30"><span class="field-help">Khaali = bot ka default</span><span id="err-entryStart" class="field-err" hidden></span></label>
+                <label class="field"><span class="field-label">Aakhri entry kab tak</span><input class="input" name="lastEntry" type="time" min="09:15" max="15:30"><span class="field-help">Khaali = bot ka default</span><span id="err-lastEntry" class="field-err" hidden></span></label>
+              </div>
+              <fieldset class="field">
+                <legend class="field-label">Risk limit ki ikai <em>zaroori</em></legend>
+                <div class="radios">
+                  <label class="radio"><input type="radio" name="riskUnit" value="percent"><span>Percent mein</span></label>
+                  <label class="radio"><input type="radio" name="riskUnit" value="sl-count"><span>Stop-Loss ki ginti (din 1, hafta 2, mahina 4)</span></label>
+                </div>
+                <span id="err-riskUnit" class="field-err" hidden></span>
+              </fieldset>
+              <fieldset class="field">
+                <legend class="field-label">Data kitna purana chalega <em>zaroori</em></legend>
+                <div class="radios">
+                  <label class="radio"><input type="radio" name="dataStale" value="500"><span>500 ms (sakht)</span></label>
+                  <label class="radio"><input type="radio" name="dataStale" value="1000"><span>1 second</span></label>
+                </div>
+                <span id="err-dataStale" class="field-err" hidden></span>
+              </fieldset>
+              <fieldset class="field">
+                <legend class="field-label">Breadth ke stocks</legend>
+                <div class="radios">
+                  <label class="radio"><input type="radio" name="breadth" value="claude-top10" checked><span>Claude ka prastaav (vazan mein top 10)</span></label>
+                  <label class="radio"><input type="radio" name="breadth" value="khud"><span>Main khud dunga</span></label>
+                </div>
+                <label id="st-breadth-list" class="field" hidden><span class="field-label">Stocks (comma se)</span><textarea class="input" name="breadthList" rows="2" placeholder="HDFCBANK, ICICIBANK, RELIANCE"></textarea><span id="err-breadthList" class="field-err" hidden></span></label>
+              </fieldset>
+              <div class="info-row"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg><p><b>Lot niyam (pehle se tay):</b> sirf 1 lot, premium quality pehle, sasta OTM nahi; paisa kam ho toh trade chupchaap skip.</p></div>
+              <label class="field"><span class="field-label">Notes</span><textarea class="input" name="notes" rows="2" placeholder="Claude ke liye koi baat"></textarea></label>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Draft save karo</span></button>
+                <button type="button" id="st-download" class="btn btn-secondary"><svg class="ic" aria-hidden="true"><use href="#i-download"/></svg><span>JSON download</span></button>
+                <button type="button" id="st-copy" class="btn btn-secondary"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button>
+                <button type="button" id="st-reset" class="btn btn-ghost"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg><span>Khaali karo</span></button>
+              </div>
+              <p id="st-saved" class="muted small"></p>
+            </form>
+          </article>
+          <div class="col">
+            <article class="card">
+              <div class="card-head"><h2>Pasand (is browser ki)</h2></div>
+              <div class="form">
+                <label class="field"><span class="field-label">Theme</span><select id="pf-theme" class="input"><option value="system">Phone/PC jaisa</option><option value="dark">Dark</option><option value="light">Light</option></select></label>
+                <label class="field"><span class="field-label">Pehle kaunsa index dikhe</span><select id="pf-index" class="input"></select></label>
+                <label class="field"><span class="field-label">Auto-refresh</span><select id="pf-refresh" class="input"></select><span class="field-help">Kam refresh = Vercel ke free calls kam kharch</span></label>
+              </div>
+            </article>
+            <article class="card danger-zone">
+              <div class="card-head"><h2>Is browser ka data</h2></div>
+              <p class="muted small">Pasand, draft, practice log aur checklist mitao. Bot ya GitHub par kuch nahi badlega.</p>
+              <button id="pf-wipe" type="button" class="btn btn-danger mt"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg><span>Sab mitao</span></button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SETUP ================= -->
+      <section data-view="setup" aria-labelledby="h-setup" hidden>
+        <header class="page-head">
+          <div><h1 id="h-setup">Setup checklist</h1><p class="page-sub">Jo step ho gaya, tick karo. Yaad is browser mein rehti hai.</p></div>
+          <div class="page-actions"><a class="btn btn-secondary" href="https://github.com/starmovie12/Bot-trading-/blob/main/SETUP_GUIDE.md" rel="noopener noreferrer" target="_blank"><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg><span>Poori guide</span></a></div>
+        </header>
+        <article class="card">
+          <div id="su-progress"></div>
+          <ol id="su-list" class="setup-list"></ol>
+        </article>
+      </section>
+
+      <footer class="foot">
+        <span id="age">Data —</span>
+        <span>Faisla hamesha bot leta hai; yeh terminal sirf dikhata hai. Profit ki koi guarantee nahi.</span>
       </footer>
     </main>
   </div>
+
+  <nav class="tabbar" aria-label="Phone menu">
+    <a href="#home" data-nav="home"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg><span>Home</span></a>
+    <a href="#chart" data-nav="chart"><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg><span>Chart</span></a>
+    <a href="#chain" data-nav="chain"><svg class="ic" aria-hidden="true"><use href="#i-chain"/></svg><span>Chain</span></a>
+    <a href="#trades" data-nav="trades"><svg class="ic" aria-hidden="true"><use href="#i-trades"/></svg><span>Trades</span></a>
+    <button id="more-btn" type="button" data-nav="more" aria-label="Aur pages"><svg class="ic" aria-hidden="true"><use href="#i-more"/></svg><span>Aur</span></button>
+  </nav>
   <noscript><p class="banner banner-error">Yeh terminal JavaScript ke bina nahi chalta.</p></noscript>
 </body>
 </html>
