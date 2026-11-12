@@ -71,11 +71,26 @@ test("vercel.json mein sakht security headers", () => {
   assert.ok(all["Strict-Transport-Security"]);
 });
 
+const jsFiles = () => {
+  const out = [];
+  const walk = (dir) => {
+    for (const n of readdirSync(dir)) {
+      const p = join(dir, n);
+      if (statSync(p).isDirectory()) walk(p);
+      else if (p.endsWith(".js")) out.push(p);
+    }
+  };
+  walk(new URL("../public/js", import.meta.url).pathname);
+  return out;
+};
+
 test("page par inline script ya innerHTML nahi (XSS se bachav)", () => {
   const html = readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
-  const js = readFileSync(new URL("../public/app.js", import.meta.url), "utf8");
   assert.doesNotMatch(html, /<script(?![^>]*\bsrc=)[^>]*>/);
-  assert.doesNotMatch(js, /innerHTML|eval\(|new Function/);
+  assert.doesNotMatch(html, /\son[a-z]+="/, "HTML mein inline event handler nahi");
+  const files = jsFiles();
+  assert.ok(files.length >= 6);
+  for (const f of files) assert.doesNotMatch(readFileSync(f, "utf8"), /innerHTML|outerHTML|insertAdjacentHTML|document\.write|eval\(|new Function/, f);
 });
 
 
@@ -173,10 +188,18 @@ test("galat candle (high close se neeche) pakdi jaati hai", () => {
 
 test("page: 5 views, menu, manifest; har script/style apni hi site se", () => {
   const html = readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
-  for (const v of ["home", "chart", "chain", "trades", "bot"]) {
+  const views = ["home", "chart", "chain", "trades", "health", "controls", "activity", "settings", "setup"];
+  for (const v of views) {
     assert.match(html, new RegExp(`data-view="${v}"`));
-    assert.match(html, new RegExp(`href="#${v}" data-nav="${v}"`));
+    assert.match(html, new RegExp(`href="#${v}" data-nav="${v}"`), `${v} ka menu link`);
   }
+  // Har menu link ka page hona chahiye (koi toota link nahi)
+  for (const [, v] of html.matchAll(/data-nav="([a-z]+)"/g)) assert.ok(v === "more" || views.includes(v), v);
+  // Har id ek hi baar
+  const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
+  assert.equal(new Set(ids).size, ids.length, "duplicate id");
+  // JS jo id dhoondhta hai woh HTML mein hai
+  for (const f of jsFiles()) for (const [, id] of readFileSync(f, "utf8").matchAll(/\$\("([a-z0-9-]+)"\)/g)) assert.ok(ids.includes(id), `${f}: #${id} HTML mein nahi`);
   assert.doesNotMatch(html, /<script[^>]+src="https?:/);
   assert.doesNotMatch(html, /<link[^>]+href="https?:/);
   assert.match(html, /NAKLI DATA/);

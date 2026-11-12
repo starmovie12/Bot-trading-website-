@@ -20,24 +20,29 @@ aur idea/docs usi repo ki branch `idea` mein.
 
 Website ko build ki zaroorat nahi: `vercel.json` mein framework "Other", install skip, output `public/`.
 
-## Terminal mein kya hai
-| Hissa | Kya dikhta hai |
+## Terminal mein kya hai (admin panel)
+| Page | Kya hai / kya kaam karta hai |
 |---|---|
-| **Home** | Nifty 50, Bank Nifty, Sensex, India VIX (daam, badlaav, sparkline, din ka range); aaj ka P&L; capital; khule positions; har index ka bot signal aur uske checks; risk (nuksan seema, entry, Profit Lock, Kill Latch, Broker Stop); bot ka log |
-| **Chart** | 5/15 minute candlestick, EMA 9/21, pichhla close, bot ke entry/exit nishaan, ungli/mouse se OHLC |
-| **Option Chain** | ATM ke aas-paas 15 strike: OI (bar), OI badlaav, IV, LTP; ITM rang; spot line; PCR, Max Pain |
-| **Trades** | Positions (SL-Target ke beech LTP), Orders (status), Trade book |
-| **Bot** | Bot, Pehredaar, feed, broker API, token expiry, server, static IP ki sehat; Gates; Controls (M7 tak band); setup ki haalat |
+| **Overview** | Nifty 50, Bank Nifty, Sensex, India VIX cards; aaj ka P&L (hero number + din bhar ka chart, table view); positions; har index ka signal + checks; risk control; bot ki khabar |
+| **Chart** | 5/15 min candlestick, EMA 9/21 on-off, entry/exit nishaan, tooltip (mouse, ungli, ← →), table view, "Bada karo" |
+| **Option Chain** | ±5/±7 strike, OI bar, OI badlaav, IV, LTP, ITM, spot line, PCR, Max Pain, Resistance/Support; row tap = strike detail |
+| **Trades** | Positions / Orders / Trade book; CSV download |
+| **Sehat** | Bot, Pehredaar, feed, broker API, token countdown, server, static IP |
+| **Controls** | Bot **ON/OFF**, **Paper / Real Money** (Real par "REAL" likhna padta hai), Emergency Pause, Square-off, Kill-Switch ("KILL"), Kill hatao ("RESET"), practice log |
+| **Activity log** | Khojo, darja filter, CSV download |
+| **Settings** | Risk niyam ka draft (aapke baaki faisle) - validation, save, JSON download/copy; theme, default index, refresh |
+| **Setup checklist** | 9 step tick karo (ek hi server wala plan) |
 
-- Phone par neeche menu, bade screen par bayen menu. Dark/Light theme (button upar). Phone par "Add to Home screen" se app jaisa khulta hai.
-- Har 5 second refresh; tab chhupa ho toh refresh ruk jaata hai (Vercel ke free function calls bachte hain).
-- **Abhi saara data NAKLI hai** (upar peela banner). `lib/demo.mjs` ek seed se namoona banata hai. Asli bot judne par yahi dhaancha bot bhejega.
-- Market ka samay `lib/market.mjs` mein ek jagah: 9:15-15:30 IST maana hai. F&O ke 15:40 tak chalne ki khabar hai, **verify nahi hua**; chhutti ki list abhi nahi jaanchi.
+- Upar: market haalat, mode, IST ghadi, **Live/Ruka** (auto-refresh), ⟳ abhi taaza, 🔔 notifications, theme.
+- **Controls abhi PRACTICE hain:** bot juda nahi, isliye koi hukm broker tak nahi jaata. Asli hukm M7 mein signed + 2FA ke saath; Real Money bot khud Gates jaanch kar hi chalu karega.
+- **Saara data NAKLI hai** (peela banner). Market samay `lib/market.mjs` mein: 9:15-15:30 IST maana; F&O 15:40 **verify nahi hua**.
+- Koi npm dependency nahi, koi inline script nahi, sakht CSP, saara text `textContent` se.
 
 ## Folder
 | Folder | Kya |
 |---|---|
-| `public/` | Page (`index.html`, `app.js`, `style.css`, `icon.svg`, `manifest.webmanifest`) |
+| `public/` | Page (`index.html`, `style.css`, `icon.svg`, `manifest.webmanifest`) |
+| `public/js/` | `main.js` (routing, header, refresh), `dom.js` (surakshit helpers), `charts.js`, `state.js`, `views/*` (har page) |
 | `api/` | `/api/state`, `/api/health` (Vercel functions) |
 | `lib/state.mjs` | Haalat ki jaanch + signed push (bot ka `dashboard_push.py` yahi signature banata hai) |
 | `lib/demo.mjs`, `lib/market.mjs` | Nakli haalat aur market ka samay (IST) |
